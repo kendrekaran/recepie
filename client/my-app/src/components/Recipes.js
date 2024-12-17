@@ -196,7 +196,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./recipes.css";
+import "../styles/RecipeStyle.css";
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
