@@ -11,10 +11,13 @@ app.use(express.json());
 
 
 const corsOptions = {
-  origin: ["https://recipeapp-vert.vercel.app","https://recipeapp-oqhr.onrender.com/auth/recipe"], // Replace with your Vercel URL
-  methods: ["POST","GET","DELETE","PUT"],
-  allowedHeaders: ["Content-Type"],
+  origin: ["https://recipeapp-vert.vercel.app"], // Replace with your frontend URL
+  methods: ["POST", "GET", "DELETE", "PUT"],
+  allowedHeaders: ["Content-Type", "Authorization"], // Add Authorization header here
 };
+
+
+
 
 app.use(cors(corsOptions));
 
