@@ -1,10 +1,203 @@
+// import React, { useEffect, useState } from "react";
+// import "../styles/RecipeStyle.css";
+// import { Link } from "react-router-dom";
+// import "../styles/Searchbar.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
+
+
+// const Recipes = () => {
+//   const [recipes, setRecipes] = useState([]);
+
+//   useEffect(() => {
+//     getRecipes();
+//   }, []);
+
+//   const getRecipes = () => {
+//     fetch("https://recipeapp-oqhr.onrender.com/auth/recipe", {
+//       method: "GET",
+//       headers: {
+//         Authorization: `${localStorage.getItem("token")}`,
+//       },
+//     })
+//       .then((response) => {
+//         if (!response.ok) {
+//           throw new Error("Failed to fetch recipe data");
+//         }
+//         return response.json();
+//       })
+//       .then((data) => {
+//         setRecipes(data);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   };
+
+//   const handleDeleteRecipe = async (recipeId) => {
+//     try {
+//       // Confirm the deletion with the user
+//       if (window.confirm("Are you sure you want to delete this recipe?")) {
+//         // Send a DELETE request to the server
+//         const response = await fetch(
+//           `https://recipeapp-oqhr.onrender.com/auth/recipe/${recipeId}`,
+//           {
+//             method: "DELETE",
+//           }
+//         );
+
+//         if (response.ok) {
+//           toast.success("Recipe deleted successfully");
+
+//           setTimeout(() => {
+//             window.location = "/recipes";
+//           }, 4000);
+//         } else {
+//           getRecipes();
+//           window.location = "/recipes";
+//         }
+//       }
+//     } catch (error) {
+//       toast.error("An error occurred while deleting the recipe:", error);
+
+//       setTimeout(() => {
+//         window.location.href = "/recipes";
+//       }, 3000);
+//     }
+//   };
+
+//   const handleAddToFavorites = async (recipeId) => {
+//     try {
+//       // Send a POST request to the LikedList controller
+//       const response = await fetch(
+//         `https://recipeapp-oqhr.onrender.com/auth/likedRecipes/${recipeId}`,
+//         {
+//           method: "POST",
+//         }
+//       );
+
+//       if (response.ok) {
+//         toast.success("Recipe added to favorites successfully");
+
+//         setTimeout(() => {
+//           window.location.href = "/favouriteRecipes";
+//         }, 4000);
+//       } else {
+//         const data = await response.json();
+//         if (data.error === "Recipe already exists in your favorites") {
+//           toast.warn("Recipe already exists in your favorites");
+//         } else {
+//           toast.error(data.error);
+//         }
+//       }
+//     } catch (error) {
+//       console.error("An error occurred while adding to favorites:", error);
+//     }
+//   };
+
+//   const SearchRecipes = async (e) => {
+//     try {
+//       if (e.target.value) {
+//         let Searchedrecipes = await fetch(
+//           `https://recipeapp-oqhr.onrender.comauth/searchRecipes/${e.target.value}`,
+//           {
+//             method: "GET",
+//             headers: {
+//               "Content-Type": "application/json",
+//             },
+//           }
+//         );
+
+//         Searchedrecipes = await Searchedrecipes.json();
+
+//         if (!Searchedrecipes.message) {
+//           setRecipes(Searchedrecipes);
+//         } else {
+//           setRecipes([]);
+//         }
+//       } else {
+//         getRecipes();
+//       }
+//     } catch (e) {
+//       console.log(e.message);
+//     }
+//   };
+
+//   return (
+//     <div className="Recipes">
+//       <div className="search-bar">
+//         <input
+//           type="text"
+//           className="search-input"
+//           placeholder="Search recipes"
+//           onChange={(e) => SearchRecipes(e)}
+//         />
+//       </div>
+
+//       {recipes.length > 0 ? (
+//         recipes.map((recipe) => (
+//           <div key={recipe._id} className="Recipe">
+//             <h2>{recipe.title}</h2>
+//             <img src={recipe.imageUrl} alt={recipe.title} />
+//             <h3>Ingredients:</h3>
+//             <ul>
+//               {recipe.ingredients.length > 0 && (
+//                 <ul>
+//                   {recipe.ingredients.map((ingredient, index) => (
+//                     <li key={index}>{ingredient}</li>
+//                   ))}
+//                 </ul>
+//               )}
+//             </ul>
+//             <div className="instructions-container">
+//               <h3>Instructions:</h3>
+//               {recipe.instructions.match(/^\d+\./) ? (
+//                 <div className="instructions-text">
+//                   {recipe.instructions.split("\n").map((step, index) => (
+//                     <p key={index}>{step}</p>
+//                   ))}
+//                 </div>
+//               ) : (
+//                 <ol className="instructions-list">
+//                   {recipe.instructions.split("\n").map((step, index) => (
+//                     <li key={index}>{step}</li>
+//                   ))}
+//                 </ol>
+//               )}
+//             </div>
+
+//             <button
+//               className="delete-button"
+//               onClick={() => handleDeleteRecipe(recipe._id)}
+//             >
+//               Delete
+//             </button>
+//             <button
+//               className="add-to-favorites-button"
+//               onClick={() => handleAddToFavorites(recipe._id)}
+//             >
+//               Add to Favorites
+//             </button>
+//             <Link to={"/addRecipe"}>Add more recipes</Link>
+          
+//           </div>
+//         ))
+//       ) : (
+//         <h2 className="no-recipes">No Recipes Found</h2>
+//       )}
+//       <ToastContainer />
+//     </div>
+//   );
+// };
+
+// export default Recipes;
+
 import React, { useEffect, useState } from "react";
-import "../styles/RecipeStyle.css";
 import { Link } from "react-router-dom";
-import "../styles/Searchbar.css";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
-import FeedbackPage from "./FeedbackPage";
+import "react-toastify/dist/ReactToastify.css";
+// import "./recipes.css";
+import "../styles/RecipeStyle.css";
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -36,9 +229,7 @@ const Recipes = () => {
 
   const handleDeleteRecipe = async (recipeId) => {
     try {
-      // Confirm the deletion with the user
       if (window.confirm("Are you sure you want to delete this recipe?")) {
-        // Send a DELETE request to the server
         const response = await fetch(
           `https://recipeapp-oqhr.onrender.com/auth/recipe/${recipeId}`,
           {
@@ -48,7 +239,6 @@ const Recipes = () => {
 
         if (response.ok) {
           toast.success("Recipe deleted successfully");
-
           setTimeout(() => {
             window.location = "/recipes";
           }, 4000);
@@ -59,7 +249,6 @@ const Recipes = () => {
       }
     } catch (error) {
       toast.error("An error occurred while deleting the recipe:", error);
-
       setTimeout(() => {
         window.location.href = "/recipes";
       }, 3000);
@@ -68,7 +257,6 @@ const Recipes = () => {
 
   const handleAddToFavorites = async (recipeId) => {
     try {
-      // Send a POST request to the LikedList controller
       const response = await fetch(
         `https://recipeapp-oqhr.onrender.com/auth/likedRecipes/${recipeId}`,
         {
@@ -78,7 +266,6 @@ const Recipes = () => {
 
       if (response.ok) {
         toast.success("Recipe added to favorites successfully");
-
         setTimeout(() => {
           window.location.href = "/favouriteRecipes";
         }, 4000);
@@ -124,7 +311,7 @@ const Recipes = () => {
   };
 
   return (
-    <div className="Recipes">
+    <div className="recipes-container">
       <div className="search-bar">
         <input
           type="text"
@@ -135,59 +322,64 @@ const Recipes = () => {
       </div>
 
       {recipes.length > 0 ? (
-        recipes.map((recipe) => (
-          <div key={recipe._id} className="Recipe">
-            <h2>{recipe.title}</h2>
-            <img src={recipe.imageUrl} alt={recipe.title} />
-            <h3>Ingredients:</h3>
-            <ul>
-              {recipe.ingredients.length > 0 && (
-                <ul>
-                  {recipe.ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                  ))}
-                </ul>
-              )}
-            </ul>
-            <div className="instructions-container">
-              <h3>Instructions:</h3>
-              {recipe.instructions.match(/^\d+\./) ? (
-                <div className="instructions-text">
-                  {recipe.instructions.split("\n").map((step, index) => (
-                    <p key={index}>{step}</p>
-                  ))}
+        <div className="recipe-grid">
+          {recipes.map((recipe) => (
+            <div key={recipe._id} className="recipe-card">
+              <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image" />
+              <div className="recipe-content">
+                <h2 className="recipe-title">{recipe.title}</h2>
+                <div className="recipe-details">
+                  <h3>Ingredients:</h3>
+                  <ul className="ingredients-list">
+                    {recipe.ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))}
+                  </ul>
+                  <h3>Instructions:</h3>
+                  <div className="instructions-container">
+                    {recipe.instructions.match(/^\d+\./) ? (
+                      <div className="instructions-text">
+                        {recipe.instructions.split("\n").map((step, index) => (
+                          <p key={index}>{step}</p>
+                        ))}
+                      </div>
+                    ) : (
+                      <ol className="instructions-list">
+                        {recipe.instructions.split("\n").map((step, index) => (
+                          <li key={index}>{step}</li>
+                        ))}
+                      </ol>
+                    )}
+                  </div>
                 </div>
-              ) : (
-                <ol className="instructions-list">
-                  {recipe.instructions.split("\n").map((step, index) => (
-                    <li key={index}>{step}</li>
-                  ))}
-                </ol>
-              )}
+                <div className="recipe-actions">
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeleteRecipe(recipe._id)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="add-to-favorites-button"
+                    onClick={() => handleAddToFavorites(recipe._id)}
+                  >
+                    Add to Favorites
+                  </button>
+                </div>
+              </div>
             </div>
-
-            <button
-              className="delete-button"
-              onClick={() => handleDeleteRecipe(recipe._id)}
-            >
-              Delete
-            </button>
-            <button
-              className="add-to-favorites-button"
-              onClick={() => handleAddToFavorites(recipe._id)}
-            >
-              Add to Favorites
-            </button>
-            <Link to={"/addRecipe"}>Add more recipes</Link>
-          
-          </div>
-        ))
+          ))}
+        </div>
       ) : (
         <h2 className="no-recipes">No Recipes Found</h2>
       )}
+      <Link to="/addRecipe" className="add-recipe-button">
+        Add more recipes
+      </Link>
       <ToastContainer />
     </div>
   );
 };
 
 export default Recipes;
+
