@@ -191,12 +191,83 @@
 // };
 
 // export default Recipes;
-
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../styles/RecipeStyle.css";
+import "./recipes.css";
+
+const RecipeCard = ({ recipe, onDelete, onAddToFavorites }) => {
+  const [showIngredients, setShowIngredients] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
+
+  return (
+    <div className="recipe-card">
+      <div className="recipe-image-container">
+        <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image" />
+      </div>
+      <div className="recipe-content">
+        <h2 className="recipe-title">{recipe.title}</h2>
+        <div className="recipe-toggles">
+          <button
+            className={`toggle-button ${showIngredients ? 'active' : ''}`}
+            onClick={() => setShowIngredients(!showIngredients)}
+          >
+            Ingredients
+          </button>
+          <button
+            className={`toggle-button ${showInstructions ? 'active' : ''}`}
+            onClick={() => setShowInstructions(!showInstructions)}
+          >
+            Instructions
+          </button>
+        </div>
+        {showIngredients && (
+          <div className="recipe-section">
+            <ul className="ingredients-list">
+              {recipe.ingredients.map((ingredient, index) => (
+                <li key={index}>{ingredient}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {showInstructions && (
+          <div className="recipe-section">
+            <div className="instructions-container">
+              {recipe.instructions.match(/^\d+\./) ? (
+                <div className="instructions-text">
+                  {recipe.instructions.split("\n").map((step, index) => (
+                    <p key={index}>{step}</p>
+                  ))}
+                </div>
+              ) : (
+                <ol className="instructions-list">
+                  {recipe.instructions.split("\n").map((step, index) => (
+                    <li key={index}>{step}</li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          </div>
+        )}
+        <div className="recipe-actions">
+          <button
+            className="action-button delete-button"
+            onClick={() => onDelete(recipe._id)}
+          >
+            Delete
+          </button>
+          <button
+            className="action-button favorite-button"
+            onClick={() => onAddToFavorites(recipe._id)}
+          >
+            Add to Favorites
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -281,97 +352,18 @@ const Recipes = () => {
     }
   };
 
-  const SearchRecipes = async (e) => {
-    try {
-      if (e.target.value) {
-        let Searchedrecipes = await fetch(
-          `https://recipeapp-oqhr.onrender.comauth/searchRecipes/${e.target.value}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        Searchedrecipes = await Searchedrecipes.json();
-
-        if (!Searchedrecipes.message) {
-          setRecipes(Searchedrecipes);
-        } else {
-          setRecipes([]);
-        }
-      } else {
-        getRecipes();
-      }
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
   return (
     <div className="page-container">
-      <div className="search-container">
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search for recipes..."
-          onChange={(e) => SearchRecipes(e)}
-        />
-      </div>
-
       <div className="recipes-container">
         {recipes.length > 0 ? (
           <div className="recipe-row">
             {recipes.map((recipe) => (
-              <div key={recipe._id} className="recipe-card">
-                <div className="recipe-image-container">
-                  <img src={recipe.imageUrl} alt={recipe.title} className="recipe-image" />
-                </div>
-                <div className="recipe-content">
-                  <h2 className="recipe-title">{recipe.title}</h2>
-                  <div className="recipe-section">
-                    <h3>Ingredients:</h3>
-                    <ul className="ingredients-list">
-                      {recipe.ingredients.map((ingredient, index) => (
-                        <li key={index}>{ingredient}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="recipe-section">
-                    <h3>Instructions:</h3>
-                    <div className="instructions-container">
-                      {recipe.instructions.match(/^\d+\./) ? (
-                        <div className="instructions-text">
-                          {recipe.instructions.split("\n").map((step, index) => (
-                            <p key={index}>{step}</p>
-                          ))}
-                        </div>
-                      ) : (
-                        <ol className="instructions-list">
-                          {recipe.instructions.split("\n").map((step, index) => (
-                            <li key={index}>{step}</li>
-                          ))}
-                        </ol>
-                      )}
-                    </div>
-                  </div>
-                  <div className="recipe-actions">
-                    <button
-                      className="action-button delete-button"
-                      onClick={() => handleDeleteRecipe(recipe._id)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="action-button favorite-button"
-                      onClick={() => handleAddToFavorites(recipe._id)}
-                    >
-                      Add to Favorites
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <RecipeCard
+                key={recipe._id}
+                recipe={recipe}
+                onDelete={handleDeleteRecipe}
+                onAddToFavorites={handleAddToFavorites}
+              />
             ))}
           </div>
         ) : (
