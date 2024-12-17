@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faRotate } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +37,7 @@ const Navbar = () => {
             style={isOpen ? { transform: "rotate(90deg)" } : {}}
           />
 
-          <h2>Recipe Sharing App</h2>
+          <h2>Tastify</h2>
         </div>
         <div className={`nav-right ${isOpen ? "open" : ""}`}>
           <ul>
@@ -58,6 +58,10 @@ const Navbar = () => {
                   <NavLink to="/favouriteRecipes" onClick={handleToggleMenu}>
                     Favourites
                   </NavLink>{" "}
+
+                </li>
+                <li>
+                  <NavLink to="Feedback" onClick={handleToggleMenu}>FeedBack</NavLink>
                 </li>
                 <li>
                   <NavLink to="login" onClick={LogoutUser}>
@@ -76,6 +80,7 @@ const Navbar = () => {
                 <li>
                   <NavLink to="forgotPassword">Forgot Password</NavLink>
                 </li>
+               
               </>
             )}
           </ul>

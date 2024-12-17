@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "../styles/Searchbar.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
+import FeedbackPage from "./FeedbackPage";
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -178,6 +179,8 @@ const Recipes = () => {
               Add to Favorites
             </button>
             <Link to={"/addRecipe"}>Add more recipes</Link>
+            <Link to="/feedback">Leave Feedback</Link>
+      <FeedbackPage /> 
           </div>
         ))
       ) : (

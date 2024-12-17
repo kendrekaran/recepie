@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose
-  .connect(process.env.URI)
+  .connect("mongodb://127.0.0.1/recipe-app")
   .then(() => {
     console.log("Connected to the database");
   })

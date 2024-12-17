@@ -1,47 +1,58 @@
 import React, { useState } from "react";
 import "../App.css";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import the CSS for styling
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showError, setShowError] = useState(false); // State to control the error message visibility
-  const Email = email.toLowerCase();
+  const [showError, setShowError] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password || !name) {
-      // If any of the fields are empty, show the error message
       setShowError(true);
-      return; // Prevent further execution
+      return;
     }
 
+    const Email = email.toLowerCase();
+
     try {
-      const response = await fetch(
-        "https://recipe-app-mern.onrender.com/auth/register",
-        {
+      const [localResponse, renderResponse] = await Promise.all([
+        fetch("http://localhost:2000/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email: Email, password }),
-        }
-      );
+        }),
+        fetch("https://recipe-app-mern.onrender.com/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email: Email, password }),
+        }),
+      ]);
 
-      if (response.ok) {
-        const user = await response.json();
+      const responses = await Promise.all([localResponse.json(), renderResponse.json()]);
 
-        if (user.error) {
-          toast.warn("User already exists. Try with different email");
-        } else {
-          toast.success("Registration successful.");
-          localStorage.setItem("token", user.token);
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 4000);
-        }
+      if (responses[0].error) {
+        toast.warn("User already exists in local API. Try with a different email");
       } else {
-        console.error("Failed to register user:", response.status);
+        // toast.success("yoho.");
+        localStorage.setItem("token", responses[0].token);
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 4000);
+      }
+
+      if (responses[1].error) {
+        toast.warn("User already exists in Render API. Try with a different email");
+      } else {
+        toast.success("Registration successfull.");
+        localStorage.setItem("token", responses[1].token);
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 4000);
       }
     } catch (error) {
       toast.error("An error occurred while registering user:", error);
@@ -63,7 +74,7 @@ const Register = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          type="text"
+          type="password"
           placeholder="Enter Your password"
           onChange={(e) => setPassword(e.target.value)}
         />

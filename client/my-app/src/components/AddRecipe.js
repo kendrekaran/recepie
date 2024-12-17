@@ -40,7 +40,7 @@ const AddRecipe = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send a POST request to add the recipe to the server
+
 
     const nonEmptyIngredients = recipe.ingredients.filter(
       (ingredient) => ingredient.trim() !== ""

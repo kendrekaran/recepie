@@ -8,6 +8,7 @@ import Recipes from "./components/Recipes";
 import AddRecipe from "./components/AddRecipe";
 import LikedProducts from "./components/likedProducts";
 import ForgotPassword from "./components/ForgotPassword";
+import FeedbackPage from "./components/FeedbackPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/" element={<Recipes />} />
           <Route path="/addRecipe" element={<AddRecipe />} />
+          <Route path="/feedback" element={<FeedbackPage />} />
         </Route>
       </Routes>
     </Router>
