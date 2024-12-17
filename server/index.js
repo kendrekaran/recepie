@@ -8,7 +8,16 @@ dotenv.config();
 const router = express.Router();
 
 app.use(express.json());
-app.use(cors());
+const cors = require("cors");
+
+const corsOptions = {
+  origin: ["https://recipeapp-vert.vercel.app"], // Replace with your Vercel URL
+  methods: "POST",
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOptions));
+
 
 const config = require("./db/config");
 const Home = require("./controllers/controller");
