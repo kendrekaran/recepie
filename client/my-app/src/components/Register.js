@@ -20,38 +20,32 @@ const Register = () => {
     const Email = email.toLowerCase();
 
     try {
-      const [localResponse, renderResponse] = await Promise.all([
-        fetch("https://recipeapp-oqhr.onrender.com/auth/register", {
+      // Send request to your API
+      const localResponse = await fetch(
+        "https://recipeapp-oqhr.onrender.com/auth/register",
+        {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email: Email, password }),
-        }),
-       
-      ]);
+        }
+      );
 
-      const responses = await Promise.all([localResponse.json(), renderResponse.json()]);
+      const localData = await localResponse.json();
 
-      if (responses[0].error) {
-        toast.warn("User already exists in local API. Try with a different email");
-      } else {
-        // toast.success("yoho.");
-        localStorage.setItem("token", responses[0].token);
+      if (localResponse.ok) {
+        // Success case
+        localStorage.setItem("token", localData.token);
+        toast.success("Registration successful.");
         setTimeout(() => {
           window.location.href = "/";
-        }, 4000);
-      }
-
-      if (responses[1].error) {
-        toast.warn("User already exists in Render API. Try with a different email");
+        }, 2000);
       } else {
-        toast.success("Registration successfull.");
-        localStorage.setItem("token", responses[1].token);
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 4000);
+        // Error from API
+        toast.warn(localData.message || "User already exists in the API.");
       }
     } catch (error) {
-      toast.error("An error occurred while registering user:", error);
+      console.error("Error:", error);
+      toast.error("An error occurred while registering.");
     }
   };
 
