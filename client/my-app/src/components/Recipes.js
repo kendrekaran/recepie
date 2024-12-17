@@ -179,8 +179,7 @@ const Recipes = () => {
               Add to Favorites
             </button>
             <Link to={"/addRecipe"}>Add more recipes</Link>
-            <Link to="/feedback">Leave Feedback</Link>
-      <FeedbackPage /> 
+          
           </div>
         ))
       ) : (
