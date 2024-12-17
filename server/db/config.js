@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb://127.0.0.1/recipe-app")
+  .connect("mongodb+srv://Harsh:Harsh%404512@cluster0.xdmnn.mongodb.net/DoxcAi")
   .then(() => {
     console.log("Connected to the database");
   })

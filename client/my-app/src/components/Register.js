@@ -26,11 +26,7 @@ const Register = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email: Email, password }),
         }),
-        fetch("https://recipe-app-mern.onrender.com/auth/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email: Email, password }),
-        }),
+       
       ]);
 
       const responses = await Promise.all([localResponse.json(), renderResponse.json()]);
