@@ -196,6 +196,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../styles/RecipeStyle.css";
+import SearchBar from "./components/SearchBar";
 
 const RecipeCard = ({ recipe, onDelete, onAddToFavorites }) => {
   const [showIngredients, setShowIngredients] = useState(false);
@@ -271,6 +272,7 @@ const RecipeCard = ({ recipe, onDelete, onAddToFavorites }) => {
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   useEffect(() => {
     getRecipes();
@@ -291,6 +293,7 @@ const Recipes = () => {
       })
       .then((data) => {
         setRecipes(data);
+        setFilteredRecipes(data);
       })
       .catch((error) => {
         console.error(error);
@@ -352,12 +355,20 @@ const Recipes = () => {
     }
   };
 
+  const handleSearch = (searchTerm) => {
+    const filtered = recipes.filter(recipe =>
+      recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredRecipes(filtered);
+  };
+
   return (
     <div className="page-container">
+      <SearchBar onSearch={handleSearch} />
       <div className="recipes-container">
-        {recipes.length > 0 ? (
+        {filteredRecipes.length > 0 ? (
           <div className="recipe-row">
-            {recipes.map((recipe) => (
+            {filteredRecipes.map((recipe) => (
               <RecipeCard
                 key={recipe._id}
                 recipe={recipe}
@@ -379,4 +390,5 @@ const Recipes = () => {
 };
 
 export default Recipes;
+
 

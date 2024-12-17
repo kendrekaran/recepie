@@ -8,9 +8,7 @@
 
 }
 
-body{
-  background-color: rgb(212, 216, 216);
-}
+
 
 /* Container for the Signup form */
 .SignupContainer {
@@ -85,6 +83,13 @@ nav {
   z-index: 100;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* Add this new rule to create space for the fixed navbar */
+body {
+  padding-top: 60px;
+  background-color: rgb(212, 216, 216); /* Adjust this value based on your navbar height */
+}
+
 
 /* Navigation items */
 nav ul {
