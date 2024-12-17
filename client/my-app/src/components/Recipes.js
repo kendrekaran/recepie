@@ -14,7 +14,7 @@ const Recipes = () => {
   }, []);
 
   const getRecipes = () => {
-    fetch("https://recipe-app-mern.onrender.com/auth/recipe", {
+    fetch("https://recipeapp-oqhr.onrender.com/auth/recipe", {
       method: "GET",
       headers: {
         Authorization: `${localStorage.getItem("token")}`,
@@ -40,7 +40,7 @@ const Recipes = () => {
       if (window.confirm("Are you sure you want to delete this recipe?")) {
         // Send a DELETE request to the server
         const response = await fetch(
-          `https://recipe-app-mern.onrender.com/auth/recipe/${recipeId}`,
+          `https://recipeapp-oqhr.onrender.com/auth/recipe/${recipeId}`,
           {
             method: "DELETE",
           }
@@ -99,7 +99,7 @@ const Recipes = () => {
     try {
       if (e.target.value) {
         let Searchedrecipes = await fetch(
-          `https://recipe-app-mern.onrender.com/auth/searchRecipes/${e.target.value}`,
+          `https://recipeapp-oqhr.onrender.comauth/searchRecipes/${e.target.value}`,
           {
             method: "GET",
             headers: {
