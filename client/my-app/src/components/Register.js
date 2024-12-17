@@ -21,7 +21,7 @@ const Register = () => {
 
     try {
       const [localResponse, renderResponse] = await Promise.all([
-        fetch("http://localhost:2000/auth/register", {
+        fetch("https://recipeapp-oqhr.onrender.com/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email: Email, password }),

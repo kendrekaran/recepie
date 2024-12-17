@@ -70,7 +70,7 @@ const Recipes = () => {
     try {
       // Send a POST request to the LikedList controller
       const response = await fetch(
-        `https://recipe-app-mern.onrender.com/auth/likedRecipes/${recipeId}`,
+        `https://recipeapp-oqhr.onrender.com/auth/likedRecipes/${recipeId}`,
         {
           method: "POST",
         }

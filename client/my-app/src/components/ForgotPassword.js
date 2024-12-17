@@ -19,7 +19,7 @@ const UpdatePassword = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:2000/auth/forgotpassword",
+        "https://recipeapp-oqhr.onrender.com/auth/forgotpassword",
         {
           method: "PUT",
           headers: {
