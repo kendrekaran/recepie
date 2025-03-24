@@ -2,10 +2,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
-// Pre-load mongoose connection
-require('./db/config');
-
-// Import the express app
+// Import the express app (which now includes MongoDB connection)
 const app = require('./index');
 
 // Export the serverless handler
