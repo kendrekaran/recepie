@@ -8,8 +8,6 @@ dotenv.config();
 
 app.use(express.json());
 
-
-
 app.use(cors("*"));
 
 const config = require("./db/config");
