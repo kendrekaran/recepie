@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose
-  .connect("mongodb+srv://Harsh:Harsh%404512@cluster0.xdmnn.mongodb.net/DoxcAi")
+  .connect("mongodb+srv://karan902:I2zUU1l6WKEiB3ai@cluster0.byki5.mongodb.net/DoxcAi")
   .then(() => {
     console.log("Connected to the database");
   })
