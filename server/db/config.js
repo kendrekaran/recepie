@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
+
 mongoose
-  .connect("mongodb+srv://karan902:I2zUU1l6WKEiB3ai@cluster0.byki5.mongodb.net/DoxcAi")
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000 // Timeout after 5s instead of 30s
+  })
   .then(() => {
     console.log("Connected to the database");
   })
   .catch((error) => {
     console.error("Error connecting to the database:", error);
   });
+
+module.exports = mongoose.connection;
