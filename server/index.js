@@ -8,24 +8,9 @@ dotenv.config();
 
 app.use(express.json());
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    const allowedOrigins = [
-      process.env.CLIENT_URL,
-      process.env.LOCAL_CLIENT_URL
-    ];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: ["POST", "GET", "DELETE", "PUT", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
 
-app.use(cors(corsOptions));
+
+app.use(cors("*"));
 
 const config = require("./db/config");
 const Home = require("./controllers/controller");
