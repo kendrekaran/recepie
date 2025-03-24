@@ -3,13 +3,36 @@ const Liked = require("../Schema/LikedRecipeSchema");
 
 const createRecipe = async (req, res) => {
   try {
-    const { title, ingredients, instructions, imageUrl } = req.body;
+    const { 
+      title, 
+      ingredients, 
+      instructions, 
+      imageUrl, 
+      description, 
+      cookTime, 
+      difficulty,
+      source,
+      sourceId,
+      area,
+      category,
+      tags,
+      youtubeLink
+    } = req.body;
 
     const newRecipe = await Recipe.create({
       title,
       ingredients,
       instructions,
       imageUrl,
+      description,
+      cookTime,
+      difficulty,
+      source,
+      sourceId,
+      area,
+      category,
+      tags,
+      youtubeLink
     });
 
     res.status(201).json(newRecipe);
@@ -51,29 +74,71 @@ const deleteRecipe = async (req, res) => {
 
 const LikedList = async (req, res) => {
   try {
-    // Find the recipe by ID in the database
-    let recipe = await Recipe.findOne({ _id: req.params.id });
-
-    // Check if the recipe exists in the user's favorites
-    const existingFavorite = await Liked.findOne({ title: recipe.title });
-
-    if (existingFavorite) {
-      // Recipe already exists in favorites
-      return res
-        .status(400)
-        .json({ error: "Recipe already exists in your favorites" });
-    } else {
-      // Create a new favorite recipe entry
-      const { title, instructions, imageUrl, ingredients } = recipe;
-      const newFavorite = await Liked.create({
-        title,
-        instructions,
-        imageUrl,
-        ingredients,
-      });
-
-      // Respond with the newly added favorite recipe
+    // If sourceId is provided in the request body, this is from an external API
+    if (req.body && req.body.sourceId) {
+      // Check if the recipe already exists in favorites
+      const existingFavorite = await Liked.findOne({ sourceId: req.body.sourceId });
+      
+      if (existingFavorite) {
+        return res.status(400).json({ error: "Recipe already exists in your favorites" });
+      }
+      
+      // Create a new favorite recipe entry from the request body
+      const newFavorite = await Liked.create(req.body);
       return res.status(201).json({ favoriteRecipe: newFavorite });
+    } 
+    // Otherwise, handle from internal database
+    else {
+      // Find the recipe by ID in the database
+      let recipe = await Recipe.findOne({ _id: req.params.id });
+      
+      if (!recipe) {
+        return res.status(404).json({ error: "Recipe not found" });
+      }
+
+      // Check if the recipe exists in the user's favorites
+      const existingFavorite = await Liked.findOne({ title: recipe.title });
+
+      if (existingFavorite) {
+        // Recipe already exists in favorites
+        return res.status(400).json({ error: "Recipe already exists in your favorites" });
+      } else {
+        // Create a new favorite recipe entry with all fields
+        const { 
+          title, 
+          ingredients, 
+          instructions, 
+          imageUrl, 
+          description, 
+          cookTime, 
+          difficulty,
+          source,
+          sourceId,
+          area,
+          category,
+          tags,
+          youtubeLink
+        } = recipe;
+        
+        const newFavorite = await Liked.create({
+          title,
+          ingredients,
+          instructions,
+          imageUrl,
+          description, 
+          cookTime, 
+          difficulty,
+          source,
+          sourceId,
+          area,
+          category,
+          tags,
+          youtubeLink
+        });
+
+        // Respond with the newly added favorite recipe
+        return res.status(201).json({ favoriteRecipe: newFavorite });
+      }
     }
   } catch (error) {
     // Handle any errors that occur during the process
@@ -115,9 +180,15 @@ const searchRecipes = async (req, res) => {
   const searchKey = req.params.key;
 
   try {
-    // Use a case-insensitive regular expression to search for recipes by title
+    // Use a case-insensitive regular expression to search across multiple fields
     const recipes = await Recipe.find({
-      title: { $regex: new RegExp(searchKey, "i") },
+      $or: [
+        { title: { $regex: new RegExp(searchKey, "i") } },
+        { area: { $regex: new RegExp(searchKey, "i") } },
+        { category: { $regex: new RegExp(searchKey, "i") } },
+        { tags: { $regex: new RegExp(searchKey, "i") } },
+        { description: { $regex: new RegExp(searchKey, "i") } }
+      ]
     });
 
     // If no matching recipes found, return a meaningful message

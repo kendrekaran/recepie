@@ -1,15 +1,21 @@
 const jwt = require("jsonwebtoken");
 
 function verifyToken(req, res, next) {
-  const token = req.header("Authorization");
+  const authHeader = req.header("Authorization");
 
-  if (!token) {
+  if (!authHeader) {
     return res
       .status(401)
       .json({ message: "Access denied. No token provided." });
   }
 
   try {
+    // Extract the token from the Authorization header
+    // Format: "Bearer <token>"
+    const token = authHeader.startsWith("Bearer ") 
+      ? authHeader.substring(7) 
+      : authHeader;
+
     const decoded = jwt.verify(token, "your-secret-key");
     req.token = decoded;
     next();

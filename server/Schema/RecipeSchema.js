@@ -11,6 +11,15 @@ const recipeSchema = new mongoose.Schema({
     required: true,
   },
   imageUrl: String,
+  description: String,
+  cookTime: String,
+  difficulty: String,
+  source: String,
+  sourceId: String,
+  area: String,
+  category: String,
+  tags: String,
+  youtubeLink: String
 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);
