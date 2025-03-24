@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.use(cors("*"));
 
+
 const config = require("./db/config");
 const Home = require("./controllers/controller");
 const LoginRoute = require("./routes/LoginRoute");
