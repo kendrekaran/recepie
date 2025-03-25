@@ -82,7 +82,7 @@ const AddRecipe = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:1000/auth/recipe",
+        "https://recipie-backend-nine.vercel.app/auth/recipe",
         {
           method: "POST",
           headers: {

@@ -166,7 +166,7 @@ const Recipes = () => {
     
     console.log("Using token:", token.substring(0, 15) + "..."); // Log part of the token for debugging
     
-    fetch("http://localhost:1000/auth/recipe", {
+    fetch("https://recipie-backend-nine.vercel.app/auth/recipe", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -200,7 +200,7 @@ const Recipes = () => {
       if (window.confirm("Are you sure you want to delete this recipe?")) {
         toast.info("Deleting recipe...");
         const response = await fetch(
-          `http://localhost:1000/auth/recipe/${recipeId}`,
+          `https://recipie-backend-nine.vercel.app/auth/recipe/${recipeId}`,
           {
             method: "DELETE",
           }
@@ -243,7 +243,7 @@ const Recipes = () => {
         const formattedRecipe = formatMealToRecipe(completeData);
         
         const response = await fetch(
-          `http://localhost:1000/auth/likedRecipes/${formattedRecipe.sourceId}`,
+          `https://recipie-backend-nine.vercel.app/auth/likedRecipes/${formattedRecipe.sourceId}`,
           {
             method: "POST",
             headers: {
@@ -268,7 +268,7 @@ const Recipes = () => {
         const recipeId = meal._id;
         toast.info("Adding to favorites...");
         const response = await fetch(
-          `http://localhost:1000/auth/likedRecipes/${recipeId}`,
+          `https://recipie-backend-nine.vercel.app/auth/likedRecipes/${recipeId}`,
           {
             method: "POST",
           }

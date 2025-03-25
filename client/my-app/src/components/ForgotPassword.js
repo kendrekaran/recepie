@@ -19,7 +19,7 @@ const UpdatePassword = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:1000/auth/forgotpassword",
+        "https://recipie-backend-nine.vercel.app/auth/forgotpassword",
         {
           method: "PUT",
           headers: {

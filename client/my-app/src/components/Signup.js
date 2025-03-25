@@ -126,7 +126,7 @@ const Signup = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:1000/auth/register",
+        "https://recipie-backend-nine.vercel.app/auth/register",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

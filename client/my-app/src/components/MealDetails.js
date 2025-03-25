@@ -38,7 +38,7 @@ const MealDetails = () => {
     try {
       toast.info("Adding to favorites...");
       const response = await fetch(
-        `http://localhost:1000/auth/likedRecipes/${meal.sourceId}`,
+        `https://recipie-backend-nine.vercel.app/auth/likedRecipes/${meal.sourceId}`,
         {
           method: "POST",
           headers: {

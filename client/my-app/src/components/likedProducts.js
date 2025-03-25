@@ -23,7 +23,7 @@ const LikedProducts = () => {
       setLoading(true);
       // Make a GET request to the /api/liked-products endpoint
       const response = await fetch(
-        "http://localhost:1000/auth/likedRecipes"
+        "https://recipie-backend-nine.vercel.app/auth/likedRecipes"
       );
 
       if (!response.ok) {
@@ -54,7 +54,7 @@ const LikedProducts = () => {
       if (window.confirm("Are you sure you want to remove this recipe from favorites?")) {
         toast.info("Removing recipe...");
         const response = await fetch(
-          `http://localhost:1000/auth/removeLiked/${recipeId}`,
+          `https://recipie-backend-nine.vercel.app/auth/removeLiked/${recipeId}`,
           {
             method: "DELETE",
           }

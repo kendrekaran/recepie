@@ -117,7 +117,7 @@ const ExploreRecipes = () => {
       const formattedRecipe = formatMealToRecipe(completeData);
       
       const response = await fetch(
-        `http://localhost:1000/auth/likedRecipes/${formattedRecipe.sourceId}`,
+        `https://recipie-backend-nine.vercel.app/auth/likedRecipes/${formattedRecipe.sourceId}`,
         {
           method: "POST",
           headers: {

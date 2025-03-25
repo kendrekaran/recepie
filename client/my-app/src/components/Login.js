@@ -59,7 +59,7 @@ const Login = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:1000/auth/login",
+        "https://recipie-backend-nine.vercel.app/auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
