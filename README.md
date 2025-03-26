@@ -34,7 +34,7 @@ Before deploying, you need to configure your MongoDB Atlas cluster:
 3. Connect your GitHub repository
 4. Set up the following environment variables in Vercel:
    - `REACT_APP_API_URL` - Your production backend URL with /auth (e.g., https://your-backend-app.vercel.app/auth)
-   - `REACT_APP_LOCAL_API_URL` - Your local backend URL with /auth (e.g., http://localhost:1000/auth)
+   - `REACT_APP_LOCAL_API_URL` - Your local backend URL with /auth (e.g., https://recipie-backend-nine.vercel.app/auth)
 5. Deploy the project
 
 ## Local Development
@@ -60,7 +60,7 @@ Before deploying, you need to configure your MongoDB Atlas cluster:
 3. Create a `.env` file with:
    ```
    REACT_APP_API_URL=https://your-backend-app.vercel.app/auth
-   REACT_APP_LOCAL_API_URL=http://localhost:1000/auth
+   REACT_APP_LOCAL_API_URL=https://recipie-backend-nine.vercel.app/auth
    ```
 4. Start the development server: `npm start`
 

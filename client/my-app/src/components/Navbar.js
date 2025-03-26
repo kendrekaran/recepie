@@ -26,12 +26,12 @@ const Navbar = () => {
   const LogoutUser = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       localStorage.clear();
-      window.location.href = "/login";
+      window.location.href = "/";
     }
   };
 
   const navigation = [
-    { name: "Home", to: "/" },
+    { name: "Home", to: "/recipes" },
     { name: "Explore", to: "/explore" },
     { name: "Ingredient Search", to: "/ingredient-search" },
     { name: "Saved AI Recipes", to: "/saved-ai-recipes" },
@@ -45,7 +45,7 @@ const Navbar = () => {
       <div className="container px-4 py-4 mx-auto">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0 text-2xl font-bold">
+          <Link to="/recipes" className="flex-shrink-0 text-2xl font-bold">
             <span className="text-black">FLA</span>
             <span className="text-amber-500">VORIZ</span>
           </Link>
@@ -54,7 +54,7 @@ const Navbar = () => {
           <nav className="hidden flex-grow justify-center items-center mx-4 space-x-6 md:flex lg:space-x-8">
             {auth && (
               <>
-                <NavLink to="/" label="HOME" />
+                <NavLink to="/recipes" label="HOME" />
                 <NavLink to="/explore" label="EXPLORE" />
                 <NavLink to="/ingredient-search" label="INGREDIENT SEARCH" />
                 <NavLink to="/saved-ai-recipes" label="SAVED AI RECIPES" />
