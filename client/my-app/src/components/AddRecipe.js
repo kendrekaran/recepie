@@ -82,11 +82,12 @@ const AddRecipe = () => {
 
     try {
       const response = await fetch(
-        "https://recipie-backend-nine.vercel.app/auth/recipe",
+        `${process.env.REACT_APP_API_URL}/recipe`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: localStorage.getItem("token"),
           },
           body: JSON.stringify({
             ...recipe,

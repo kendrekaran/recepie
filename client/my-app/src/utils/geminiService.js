@@ -10,9 +10,7 @@ export const getRecipeFromGemini = async (ingredients) => {
   
   try {
     // Use environment variables for API URL
-    const apiUrl = process.env.NODE_ENV === 'production' 
-      ? `${process.env.REACT_APP_API_URL}/gemini/recipe` 
-      : `${process.env.REACT_APP_LOCAL_API_URL}/gemini/recipe`;
+    const apiUrl = `${process.env.REACT_APP_API_URL}/gemini/recipe`;
     
     // Set a timeout for the request
     const controller = new AbortController();

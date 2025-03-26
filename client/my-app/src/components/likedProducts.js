@@ -15,15 +15,19 @@ const LikedProducts = () => {
 
   useEffect(() => {
     // Call the async function to fetch liked products when the component mounts
-    fetchLikedProducts();
+    fetchLikedRecipes();
   }, []);
 
-  const fetchLikedProducts = async () => {
+  const fetchLikedRecipes = async () => {
     try {
       setLoading(true);
-      // Make a GET request to the /api/liked-products endpoint
       const response = await fetch(
-        "https://recipie-backend-nine.vercel.app/auth/likedRecipes"
+        `${process.env.REACT_APP_API_URL}/likedRecipes`,
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
       );
 
       if (!response.ok) {
@@ -49,14 +53,17 @@ const LikedProducts = () => {
     }
   };
 
-  const handleRemoveItem = async (recipeId) => {
+  const handleUnlikeRecipe = async (recipeId) => {
     try {
       if (window.confirm("Are you sure you want to remove this recipe from favorites?")) {
         toast.info("Removing recipe...");
         const response = await fetch(
-          `https://recipie-backend-nine.vercel.app/auth/removeLiked/${recipeId}`,
+          `${process.env.REACT_APP_API_URL}/removeLiked/${recipeId}`,
           {
             method: "DELETE",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
           }
         );
 
@@ -237,7 +244,7 @@ const LikedProducts = () => {
                       </button>
                     )}
                     <button
-                      onClick={() => handleRemoveItem(product._id)}
+                      onClick={() => handleUnlikeRecipe(product._id)}
                       className="p-2 text-white bg-red-500 rounded-lg transition-colors hover:bg-red-600"
                       aria-label="Remove from favorites"
                     >

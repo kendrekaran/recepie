@@ -19,13 +19,11 @@ const UpdatePassword = () => {
 
     try {
       const response = await fetch(
-        "https://recipie-backend-nine.vercel.app/auth/forgotpassword",
+        `${process.env.REACT_APP_API_URL}/forgotpassword`,
         {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: formData.email }),
         }
       );
 

@@ -57,22 +57,18 @@ const Register = () => {
       setIsSubmitting(true);
       
       try {
-        const localResponse = await fetch(
-          "https://recipie-backend-nine.vercel.app/auth/register",
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/register`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-              name: formData.name, 
-              email: formData.email.toLowerCase(), 
-              password: formData.password 
-            }),
+            body: JSON.stringify(formData),
           }
         );
 
-        const localData = await localResponse.json();
+        const localData = await response.json();
 
-        if (localResponse.ok) {
+        if (response.ok) {
           localStorage.setItem("token", localData.token);
           toast.success("Registration successful! Redirecting...");
           setTimeout(() => {

@@ -126,13 +126,13 @@ const Signup = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "https://recipie-backend-nine.vercel.app/auth/register",
+        `${process.env.REACT_APP_API_URL}/register`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             name: formData.name.trim(),
-            email: formData.email.toLowerCase(),
+            email: formData.email.toLowerCase().trim(),
             password: formData.password
           }),
         }

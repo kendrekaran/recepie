@@ -1,7 +1,7 @@
 // TheMealDB API Service
 // Documentation: https://www.themealdb.com/api.php
 
-const API_BASE_URL = 'https://www.themealdb.com/api/json/v1/1';
+const API_BASE_URL = process.env.REACT_APP_MEALDB_API_URL;
 
 // Get a random meal
 export const getRandomMeal = async () => {
@@ -128,7 +128,7 @@ export const formatMealToRecipe = (meal) => {
  */
 export const searchMealsByIngredient = async (ingredient) => {
   try {
-    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${encodeURIComponent(ingredient)}`);
+    const response = await fetch(`${API_BASE_URL}/filter.php?i=${encodeURIComponent(ingredient)}`);
     const data = await response.json();
     return data.meals || [];
   } catch (error) {
